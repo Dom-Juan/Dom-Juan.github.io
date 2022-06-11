@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+html, body {
+	height: 100%;
+	width: 100%;
+	min-width: 100vh;
+	padding: 0;
+	margin: 0;
+}
+
+h1,h2,h3,h4,h5 {
+	padding: 0;
+}
+
+.title-div {
+	margin: 35px;
+}
+
+.main-trab-list {
+	margin-top: 25px;
+	margin-bottom: 25px; 
+}

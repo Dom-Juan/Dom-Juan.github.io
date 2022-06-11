@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalho de PDI</title>
+    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="./css/index.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <nav id="topnav" class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Trabalho-PDI Juan Cardoso da Silva - 171257138</a>
+      <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false"  style="margin-left: 15px; margin-right: 15px;">
+              Menu
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              <li><a class="dropdown-item" id="btn-save" id="btn-save" class="btn btn-secondary" href="#"
+                  type="button">Salvar
+                  Imagem Saída</a></li>
+            </ul>
+          </li>
+          <!-- Operações do primeiro bimestre -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 15px; margin-right: 15px;">
+              Operações - Bimestre 1
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              <li>
+                <a class="dropdown-item" id="btn-modal" class="btn btn-secondary" href="#" type="button" data-bs-toggle="modal" data-bs-target="#convert-colors">
+                  Conversão de cores
+                </a>
+              </li>
+              <li><a class="dropdown-item" id="btn-convert-grey" class="btn btn-secondary" onclick="convertGrey()" href="#"
+                  type="button">Converter para Cinza</a></li>
+              <li><a class="dropdown-item" id="btn-get-rgb-channel" class="btn btn-secondary" onclick="makeRGBChannel()"
+                  href="#" type="button">Obter RGB</a></li>
+              <li><a class="dropdown-item" id="btn-invert-colors" class="btn btn-secondary" onclick="invertColors()"
+                  href="#" type="button">Inverter Cores</a></li>
+              <hr/>
+              <li><a class="dropdown-item" id="btn-filter-average" class="btn btn-secondary" onclick="addNoise()"
+                  href="#" type="button">Adicionar ruído (sal e pimenta)</a></li>
+              <li><a class="dropdown-item" id="btn-filter-average" class="btn btn-secondary" onclick="filterByAverage()"
+                  href="#" type="button">Filtro da Média</a></li>
+              <li><a class="dropdown-item" id="btn-filter-median" class="btn btn-secondary" onclick=filterByMedian()
+                  href="#" type="button">Filtro da Mediana</a></li>
+              <li><a class="dropdown-item" id="btn-histogram" class="btn btn-secondary" href="#" type="button" onclick="histogramEqualization()"
+                  href="#">Histrograma</a></li>
+              <hr/>
+              <li><a class="dropdown-item" id="btn-invert-colors" class="btn btn-secondary" onclick="binarization()"
+                  href="#" type="button">Binarização de imagens</a></li>
+              <li><a class="dropdown-item" id="btn-laplace-sharp" class="btn btn-secondary" href="#" type="button"
+                  href="#">Laplaciano - Sharpenning</a></li>
+              <li><a class="dropdown-item" id="btn-laplace2" class="btn btn-secondary" href="#" type="button"
+                  href="#">Laplaciano - Filtro pedido</a></li>
+              <hr/>
+              <li><a class="dropdown-item" id="btn-sobel" class="btn btn-secondary" href="#" type="button">Sobel</a></li>
+              <li><a class="dropdown-item" id="btn-limiar-modal" class="btn btn-secondary" href="#" type="button" data-bs-toggle="modal" data-bs-target="#threshold-modal">Limiarização</a></li>
+              <li><a class="dropdown-item" id="btn-gamma-modal" class="btn btn-secondary" href="#" type="button" data-bs-toggle="modal" data-bs-target="#gamma-modal">Compressão Gama</a></li>
+            </ul>
+          </li>
+          <!-- Operações do primeiro bimestre -->
+          <!-- Operações do segundo bimestre -->
+          <li class="nav-item dropdown">
+            <!-- a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 15px; margin-right: 15px;">
+              Operações - Bimestre 2
+            </a -->
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              <li><a class="dropdown-item" id="btn-transform-cos" class="btn btn-secondary" href="#" type="button">Transformada com Cosseno</a></li>
+              <li><a class="dropdown-item" id="btn-invert-colors" class="btn btn-secondary" href="#" type="button">Material
+                  não dado ainda...</a></li>
+              <hr/>
+            </ul>
+          </li>
+          <!-- Operações do segundo bimestre -->
+        </ul>
+      </div>
+    </nav>
+    <div id="main">
+      <!-- Modal para conversão de cores -->
+      <div class="modal fade" id="convert-colors" tabindex="-1" aria-labelledby="convertColors" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-center" id="convertColorsModalTitle">Conversão de cores</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <p class="text-center">RBG</p>
+                <div class="row" style="margin: 15px;">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      style="padding-left: 20px; padding-right: 20px;">R</span>
+                    <input id="red" type="text" class="form-control" placeholder="red" aria-label="red"
+                      aria-describedby="basic-addon1">
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      style="padding-left: 20px; padding-right: 20px;">G</span>
+                    <input id="green" type="text" class="form-control" placeholder="green" aria-label="green"
+                      aria-describedby="basic-addon1">
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      style="padding-left: 20px; padding-right: 20px;">B</span>
+                    <input id="blue" type="text" class="form-control" placeholder="blue" aria-label="blue"
+                      aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div class="container">
+                <p class="text-center">HSL</p>
+                <div class="row" style="margin: 15px;">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      style="padding-left: 20px; padding-right: 20px;">H</span>
+                    <input id="hue" type="text" class="form-control" placeholder="hue" aria-label="hue"
+                      aria-describedby="basic-addon1">
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      style="padding-left: 20px; padding-right: 20px;">S</span>
+                    <input id="sat" type="text" class="form-control" placeholder="sat" aria-label="sat"
+                      aria-describedby="basic-addon1">
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      style="padding-left: 20px; padding-right: 20px;">L</span>
+                    <input id="lum" type="text" class="form-control" placeholder="lum" aria-label="lum"
+                      aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+              <p id="result" class="text-center"></p>
+            </div>
+            <div class="modal-footer">
+              <div class="mb-3">
+                <button id="rbg-hsl" type="button" class="btn btn-info" style="max-width: 125px; margin: 20px;">RBG
+                  para HSL</button>
+                <button id="hsl-rgb" type="button" class="btn btn-info" style="max-width: 125px; margin: 20px;">HSL
+                  para RGB</button>
+              </div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- modal para threshold -->
+      <div class="modal fade" id="threshold-modal" tabindex="-1" aria-labelledby="thresholdModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-center" id="thresholdModalLabel">Limiarização</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <p class="text-center">Digite o threshold (T)</p>
+                <div class="row" style="margin: 15px;">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      style="padding-left: 20px; padding-right: 20px;">T</span>
+                    <input id="threshold-value" type="text" class="form-control" placeholder="Digite o T" aria-label="threshold"
+                      aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+              <p id="threshold-result" class="text-center"></p>
+            </div>
+            <div class="modal-footer">
+              <button id="btn-limiar" type="button" class="btn btn-info" style="max-width: fit-content;">Executar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- modal para compressão de escala dinâmica -->
+      <div class="modal fade" id="gamma-modal" tabindex="-1" aria-labelledby="gamma-modal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-center" id="gamaModalLabel">Compressão Gama</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <p class="text-center">Escolha o gamma</p>
+                <div class="row" style="margin: 15px;">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      style="padding-left: 20px; padding-right: 20px;">Gama</span>
+                    <input id="gamma-value" type="text" class="form-control" placeholder="Digite o gamma" aria-label="gamma"
+                      aria-describedby="basic-addon1">
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      style="padding-left: 20px; padding-right: 20px;">Valor C</span>
+                    <input id="c-value" type="text" class="form-control" placeholder="Digite o c" aria-label="c"
+                      aria-describedby="basic-addon1">
+                  </div>
+                </div>
+                <hr />
+              </div>
+              <p id="gamma-result" class="text-center"></p>
+            </div>
+            <div class="modal-footer">
+              <button id="btn-gamma" type="button" class="btn btn-info"style="max-width: fit-content;">Excecutar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="row">
+          <div class="mb-3">
+            <label for="formFile" class="form-label" style="margin-left: 15px">Escolha um arquivo</label>
+            <input class="form-control" type="file" name="file" id="canvas-file"
+              style=" width: fit-content; margin-left: 15px" onchange="readImage(this)">
+          </div>
+          <div class="mb-3">
+            <button id="btn-copy-to-entry" class="btn btn-secondary" onclick="copyToEntry()" href="#"
+              style="width: 250px; margin-left: 15px">Copiar para entrada</button>
+            <!--button id="btn-zoom" class="btn btn-dark" href="#"
+              style="width: 250px; margin-left: 15px">Zoom</button -->
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="row" style="margin: 25px;">
+              <p class="text-center">Cor do pixel selecionado</p>
+              <p id="click-rgba" class="text-center">RGBA</p>
+              <div class="mb-3 d-flex justify-content-center">
+                <div id="selected-color"
+                  style="width: 150px; height: 150px; border-style: solid; border-width: 2px; flex-direction: row; justify-content: center;">
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="margin: 25px;">
+              <p class="text-center">Cor do mouse passando em cima</p>
+              <p id="hover-rgba" class="text-center">RGBA</p>
+              <div class="mb-3 d-flex justify-content-center">
+                <div id="hovered-color"
+                  style="width: 150px; height: 150px; border-style: solid; border-width: 2px; flex-direction: row; justify-content: center;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <ul class="list-group">
+              <li class="list-group-item" style="margin-top: 10px; margin-bottom: 10px;">
+                <p class="text-center">Entrada</p>
+                <div class="d-flex justify-content-center text-center">
+                  <canvas id="canvas-pdi1" class="" width="640" height="480"
+                    style="border-style: solid; border-width: 2px; flex-direction: row; justify-content: center;"></canvas>
+                </div>
+              </li>
+              <li class="list-group-item" style="margin-top: 10px; margin-bottom: 10px;">
+                <p class="text-center">Saída 1</p>
+                <div class="d-flex justify-content-center text-center">
+                  <canvas id="canvas-pdi2" class="" width="640" height="480"
+                    style="border-style: solid; border-width: 2px; flex-direction: row; justify-content: center;"></canvas>
+                </div>
+                <div class="row" style="margin-left: 25px; margin-right:25px">
+                  <p class="text-center">Magnitude e coordenadas</p>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                          >X</span>
+                    <input id="click-cord-x" type="text" type="text" class="form-control" aria-label="coordenadas"
+                    aria-describedby="basic-addon1">
+                    <span class="input-group-text" id="basic-addon1"
+                          >Y</span>
+                    <input id="click-cord-y" type="text" type="text" class="form-control" aria-label="coordenadas"
+                    aria-describedby="basic-addon1">
+                    <span class="input-group-text" id="basic-addon1"
+                          >Magnitude</span>
+                    <input id="click-mag"  type="text" type="text" class="form-control" aria-label="magnitude"
+                    aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item" style="margin-top: 10px; margin-bottom: 10px;">
+                <p class="text-center">Saída 2</p>
+                <div class="d-flex justify-content-center text-center">
+                  <canvas id="canvas-pdi3" class="" width="640" height="480"
+                    style="border-style: solid; border-width: 2px; flex-direction: row; justify-content: center;"></canvas>
+                </div>
+              </li>
+              <li class="list-group-item" style="margin-top: 10px; margin-bottom: 10px;">
+                <p class="text-center">Saída 3</p>
+                <div class="d-flex justify-content-center text-center">
+                  <canvas id="canvas-pdi4" class="" width="640" height="480"
+                    style="border-style: solid; border-width: 2px; flex-direction: row; justify-content: center;"></canvas>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Libs de interface -->
+    <script src="./bootstrap/js/bootstrap.js"></script>
+    <script src="./jquery/jquery.js"></script>
+    <!-- Libs de interface -->
+    <!-- Implementações parte 1 -->
+    <script src="./src/main.js"></script>
+    <script src="./src/part-1/convertColors.js"></script>
+    <script src="./src/part-1/invertColor.js"></script>
+    <script src="./src/part-1/convertToGrey.js"></script>
+    <script src="./src/part-1/histogram.js"></script>
+    <script src="./src/part-1/nearestNeighbour.js"></script>
+    <script src="./src/part-1/filters.js"></script>
+    <script src="./src/part-1/binarization.js"></script>
+    <script src="./src/part-1/laplace.js"></script>
+    <script src="./src/part-1/sobel.js"></script>
+    <script src="./src/part-1/thresholding.js"></script>
+    <script src="./src/part-1/gamaCompression.js"></script>
+    <!-- Implementações parte 1 -->
+    <script src="./src/part-2/transformCos.js"></script>
+  </body>
+</html>
